@@ -1,10 +1,13 @@
 package com.example.deadlineiscomming.screens.details;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,12 @@ import com.example.deadlineiscomming.App;
 import com.example.deadlineiscomming.model.Note;
 
 public class NoteDetailsActivity extends AppCompatActivity {
+
+    private NotificationManager notificationManager;
+    private static final int NOTIFY_ID = 1;
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+    MenuItem action_save;
+
 
     private static final String EXTRA_NOTE = "NoteDetailsActivity.EXTRA_NOTE";
 

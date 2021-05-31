@@ -1,5 +1,7 @@
 package com.example.deadlineiscomming.screens.main;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -9,6 +11,7 @@ import com.example.deadlineiscomming.screens.details.NoteDetailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -20,12 +23,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+
+    private NotificationManager notificationManager;
+    private static final int NOTIFY_ID = 1;
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+    int action_save;
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_save:
+                Toast.makeText(this, "Уведомление установлено", Toast.LENGTH_SHORT);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Note> notes) {
                 adapter.setItems(notes);
             }
+
+
         });
+
+
     }
+
 }
