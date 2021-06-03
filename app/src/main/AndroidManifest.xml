@@ -24,6 +24,8 @@
         <activity android:name="com.example.deadlineiscomming.screens.details.NoteDetailsActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:enabled="true" android:name=".MyService" />
     </application>
 
 </manifest>
