@@ -31,23 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
-    private NotificationManager notificationManager;
-    private static final int NOTIFY_ID = 1;
-    private static final String CHANNEL_ID = "CHANNEL_ID";
-    int action_save;
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_save:
-                Toast.makeText(this, "Уведомление установлено", Toast.LENGTH_SHORT);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
