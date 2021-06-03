@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    //класс, в котором описано главное окно
+
     private RecyclerView recyclerView;
 
     @Override

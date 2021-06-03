@@ -12,6 +12,7 @@ import com.example.deadlineiscomming.model.Note;
 
 import java.util.List;
 
+//делаем более менее нормальный вид для нашей бд-шки
 @Dao
 public interface NoteDao {
 

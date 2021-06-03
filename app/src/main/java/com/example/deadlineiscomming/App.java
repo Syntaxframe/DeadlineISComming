@@ -9,6 +9,7 @@ import com.example.deadlineiscomming.data.NoteDao;
 
 public class App extends Application {
 
+    // что - то вроде ядра приложения(по другому сложно назвать)
     private AppDatabase database;
     private NoteDao noteDao;
 

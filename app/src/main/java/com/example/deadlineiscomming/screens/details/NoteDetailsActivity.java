@@ -1,6 +1,7 @@
 package com.example.deadlineiscomming.screens.details;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,19 +19,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.deadlineiscomming.App;
 import com.example.deadlineiscomming.R;
 import com.example.deadlineiscomming.model.Note;
 import com.example.deadlineiscomming.screens.main.MainActivity;
 
+import static android.app.Notification.DEFAULT_ALL;
 import static android.telephony.AvailableNetworkInfo.PRIORITY_HIGH;
 
 public class NoteDetailsActivity extends AppCompatActivity {
 
-    public NotificationManager notificationManager;
-    private static final int NOTIFY_ID = 1;
-    private static final String CHANNEL_ID = "CHANNEL_ID";
+    //класс в котором прописано окно сздания заметок
+
+    // Объявим переменную в начале класса
+
+    private int counter = 1;
+
+    private static String CHANNEL_ID = "CHANNEL_ID";
 
 
     private static final String EXTRA_NOTE = "NoteDetailsActivity.EXTRA_NOTE";
@@ -85,25 +92,35 @@ public class NoteDetailsActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_save:
+                //проверка на то, является ли поле текста пустым
                 if (editText.getText().length() > 0) {
                     note.text = editText.getText().toString();
                     note.done = false;
                     note.timestamp = System.currentTimeMillis();
+                    //тост при создании заметки
                     Toast.makeText(getApplicationContext(), "Заметка установлена", Toast.LENGTH_SHORT).show();
-                    notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                    Intent intent = new Intent(getApplicationContext(), NoteDetailsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    NotificationCompat.Builder notificationBuilder =
-                    new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                            .setAutoCancel(false)
-                            .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .setWhen(System.currentTimeMillis())
-                            .setContentIntent(pendingIntent)
-                            .setContentTitle("Заголовок")
-                            .setContentText("Какой то текст.............")
-                            .setPriority(PRIORITY_HIGH);
+                    //уведомление при создании заметки
+                    //
+                    // Теперь у уведомлений будут новые идентификаторы
+                    Intent notificationIntent = new Intent(NoteDetailsActivity.this, MainActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(NoteDetailsActivity.this,
+                            0, notificationIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT);
+                    NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(NoteDetailsActivity.this, CHANNEL_ID)
+                                    .setSmallIcon(R.mipmap.ic_launcher)
+                                    .setContentTitle("Ваша заметка")
+                                    .setContentText(note.text)
+                                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                                    .setContentIntent(contentIntent)
+                                    .setOngoing(true) ;
+
+                    counter++;
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(NoteDetailsActivity.this);
+                    notificationManager.notify(counter, builder.build());
+
+
 
                     if (getIntent().hasExtra(EXTRA_NOTE)) {
                         App.getInstance().getNoteDao().update(note);
@@ -117,10 +134,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-    public static void createChannelIfNeeded(NotificationManager manager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(notificationChannel);
-        }
-    }
+    //оставил пока делал. Как говориться - работает не трогай!
+
 }

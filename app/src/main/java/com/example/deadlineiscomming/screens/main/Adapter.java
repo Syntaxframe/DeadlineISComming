@@ -22,6 +22,7 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
+    //класс для нормальныой работы бд-шки и объединения интерфейса и прочих классов
     private SortedList<Note> sortedList;
 
     public Adapter() {

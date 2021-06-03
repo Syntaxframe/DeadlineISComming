@@ -1,5 +1,6 @@
 package com.example.deadlineiscomming.model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+//делаем бд-шку для наших заметок
 @Entity
 public class Note implements Parcelable {
 
